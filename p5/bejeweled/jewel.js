@@ -1,5 +1,7 @@
 var img;
 var canvas;
+var rij = 5;
+var col = 5;
 
 function setup() {
 
@@ -13,7 +15,9 @@ function setup() {
 
 function draw() {
   background(0, 0, 0);
-  for (var i = 0; i < width; i += 15) {
-    line(i, 0, i, height);
+  for (var i = 0; i < col; i ++) {
+    for (var j = 0; j < row; i++)
+   
+    rect(i*30,j*30,30,30);
   }
 }
