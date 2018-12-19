@@ -17,8 +17,8 @@ function draw() {
   background(0, 0, 0);
   for (var i = 0; i < col; i ++) {
     for (var j = 0; j < row; i++)
-    stroke(0);
-    fill(255)
-    rect(i*30,j*30,30,30);
+      stroke(0);
+      fill(255);
+      rect(i*30,j*30,30,30);
   }
 }
