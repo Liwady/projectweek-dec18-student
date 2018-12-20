@@ -14,7 +14,9 @@ function setup() {
   canvas.position(500, 50);
 }
 
-
+/************
+    BOARD
+************/
 function draw() {
   background(50);
   for (var y=0; y<col; y++) {
@@ -27,15 +29,23 @@ function draw() {
 
 }
 
-
+/*************
+    WIDTH
+*************/
 function width(board) {
   return board[0].length;
 }
 
+/*************
+    HEIGHT
+*************/
 function height(board) {
   return board.length;
 }
 
+/****************
+    IS INSIDE?
+****************/
 function isInside(board, jewel) {
   let x = jewel.getPositionX();
   let y = jewel.getPositionY();
@@ -49,18 +59,24 @@ function isInside(board, jewel) {
   return false;
 }
 
+/************
+    SWAP
+************/
 function swap(board, jewel1, jewel2) {
   let x1 = jewel1.getPositionX();
   let y1 = jewel1.getPositionY();
   let x2 = jewel2.getPositionX();
   let y2 = jewel2.getPositionY();
 
-  let elementjewel = board[y][x];
+  let jewel = board[y][x];
 
   board[y1][x1] = board[y2][x2];
-  board[y2][x2] = elementjewel;
+  board[y2][x2] = jewel;
 }
 
+/**************************
+    # HORIZONTAL CHAINS
+**************************/
 function horizontalChainAt(board, jewel) {
   let x = jewel.getPositionX();
   let y = jewel.getPositionY();
@@ -83,6 +99,9 @@ function horizontalChainAt(board, jewel) {
   return acc;
 }
 
+/*************************
+    # VERTICAL CHAINS
+*************************/
 function verticalChainAt(board, jewel) {
   let x = jewel.getPositionX();
   let y = jewel.getPositionY();
@@ -105,6 +124,9 @@ function verticalChainAt(board, jewel) {
   return acc;
 }
 
+/***********************
+    REMOVE CHAINS
+***********************/
 function removeChains(board) {
   let red = 0;
   let yellow =0;
@@ -112,6 +134,7 @@ function removeChains(board) {
   let blue = 0;
   let remove = [];
 
+  /** COUNT JEWELS HORIZONTAL **/
   for (let y=0; y<height(board); y++) {      
       let x = 0;
 
@@ -141,6 +164,7 @@ function removeChains(board) {
       }
   }
 
+  /** COUNT JEWELS VERTICAL **/
   for (let x=0; x<width(board); x++) {      
       let y = 0;
 
@@ -170,6 +194,7 @@ function removeChains(board) {
       }
   }
 
+  /** REMOVE CHAINS **/
   for (let i=0; i<remove.length; i++) {
       let jewel = remove[i];
       let x = jewel.getPositionX();
@@ -178,6 +203,7 @@ function removeChains(board) {
       board[y][x] = "";
   }
 
+  /** RETURN # ELEMENTS IN CHAINS PER COLOR **/
   let color = {};
   if (red !== 0) {
       color.red = red;
@@ -195,6 +221,9 @@ function removeChains(board) {
   return color;
 }
 
+/****************
+    COLLAPSE
+****************/
 function collapse(board) {
   for (let x=0; x<width(board); x++) {
       let last = height(board)-1;
@@ -221,3 +250,75 @@ function collapse(board) {
       return element;
   }
 }
+
+/**********************
+    CHECK NEXT TO
+**********************/
+function checkNextTo(jewel1, jewel2) {
+    let x1 = jewel1.getPositionX();
+    let y1 = jewel1.getPositionY();
+    let x2 = jewel2.getPositionX();
+    let y2 = jewel2.getPositionY();
+
+    return Math.abs(x2-x1) === 1 || Math.abs(y2-y1) === 1;
+}
+
+/*********************
+    CHECK CHAINS
+*********************/
+function checkChains(board) {
+    /** CHECK CHAIN HORIZONTAL **/
+    for (let y=0; y<height(board); y++) {      
+        let x = 0;
+  
+        while (x<width(board)) {
+            let jewel = {x:x, y:y};
+  
+            if (horizontalChainAt(board, jewel) >= 3) {
+                return true;
+            }
+  
+            x++;
+        }
+    }
+  
+    /** COUNT JEWELS VERTICAL **/
+    for (let x=0; x<width(board); x++) {      
+        let y = 0;
+  
+        while (y<height(board)) {
+            let jewel = {x:x, y:y};
+  
+            if (verticalChainAt(board, jewel) >= 3) {
+                return true;
+            }
+  
+            y++;
+        }
+    }
+
+    return false;
+}
+
+/****************************
+    CHECK CHAIN IF SO SWAP
+****************************/
+function checkChainIfSwap(board, jewel1, jewel2) {
+    swap(board, jewel1, jewel2);
+
+    if (checkChains(board)) {
+        swap(board, jewel1, jewel2);
+    }
+
+    return [jewel1, jewel2];
+}
+
+/******************
+    CHECK SWAP
+******************/
+function checkSwap(board, jewel1, jewel2) {
+    if (checkNextTo(jewel1, jewel2) === true) {
+        checkChainIfSwap(board, jewel1, jewel2);
+    }
+}
+
