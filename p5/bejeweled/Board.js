@@ -17,10 +17,12 @@ function setup() {
 
 function draw() {
   background(50);
-  for (var i = 0; i < col; i ++) {
-    board[i]=[];
-    for (var j = 0; j < row; j++)
-      board[i][j] = Jewel();
+  for (var y=0; y<col; y++) {
+    board[y]=[];
+    for (var x = 0; x<row; x++) {
+      const jewel = new Jewel([x, y]);
+      board[y][x] = jewel;
+    }
   }
 
 }
@@ -34,9 +36,12 @@ function height(board) {
   return board.length;
 }
 
-function isInside(board, position) {
-  if (position.x>=0 && position.y>=0) {
-      if (position.x <= board[0].length-1 && position.y <= board.length-1) {
+function isInside(board, jewel) {
+  let x = jewel.getPositionX();
+  let y = jewel.getPositionY();
+
+  if (x>=0 && y>=0) {
+      if (x <= board[0].length-1 && y <= board.length-1) {
           return true;
       }
   }
@@ -44,25 +49,33 @@ function isInside(board, position) {
   return false;
 }
 
-function swap(board, p, q) {    
-  let pp = board[p.y][p.x];
+function swap(board, jewel1, jewel2) {
+  let x1 = jewel1.getPositionX();
+  let y1 = jewel1.getPositionY();
+  let x2 = jewel2.getPositionX();
+  let y2 = jewel2.getPositionY();
 
-  board[p.y][p.x] = board[q.y][q.x];
-  board[q.y][q.x] = pp;
+  let elementjewel = board[y][x];
+
+  board[y1][x1] = board[y2][x2];
+  board[y2][x2] = elementjewel;
 }
 
-function horizontalChainAt(board, position) {
+function horizontalChainAt(board, jewel) {
+  let x = jewel.getPositionX();
+  let y = jewel.getPositionY();
+
   let acc = 1;
-  let color = board[position.y][position.x];
+  let color = board[y][x];
   
   let i = 1;
-  while (position.x-i >= 0 && board[position.y][(position.x)-i] === color) {
+  while (x-i >= 0 && board[y][x-i] === color) {
       acc++;
       i++;
   }
 
   let j = 1;
-  while (position.x+j < width(board) && board[position.y][(position.x)+j] === color) {
+  while (x+j < width(board) && board[y][x+j] === color) {
       acc++;
       j++;
   }
@@ -71,17 +84,20 @@ function horizontalChainAt(board, position) {
 }
 
 function verticalChainAt(board, position) {
+  let x = jewel.getPositionX();
+  let y = jewel.getPositionY();
+
   let acc = 1;
-  let color = board[position.y][position.x];
+  let color = board[y][x];
   let i = 1;
   let j = 1;
 
-  while (position.y-i >= 0 && board[(position.y)-i][position.x] === color) {
+  while (y-i >= 0 && board[y-i][x] === color) {
       acc++;
       i++;
   }
 
-  while (position.y+j < height(board) && board[(position.y)+j][position.x] === color) {
+  while (y+j < height(board) && board[y+j][x] === color) {
       acc++;
       j++;
   }
@@ -95,28 +111,28 @@ function removeChains(board) {
   let blue = 0;
   let remove = [];
 
-  for (let yposition=0; yposition<height(board); yposition++) {      
-      let xposition = 0;
+  for (let y=0; y<height(board); y++) {      
+      let x = 0;
 
-      while (xposition<width(board)) {
-          let position = { x:xposition, y:yposition };
+      while (x<width(board)) {
+          let position = {x:x, y:y};
 
           if (horizontalChainAt(board, position) >= 3) {
-              if (board[yposition][xposition] === "red") {
+              if (board[y][x] === "red") {
                   red++;
-                  remove.push({x: xposition, y: yposition});
+                  remove.push({x:x, y:y});
               }
-              if (board[yposition][xposition] === "green") {
+              if (board[y][x] === "green") {
                   green++;
-                  remove.push({x: xposition, y: yposition});
+                  remove.push({x:x, y:y});
               }
-              if (board[yposition][xposition] === "blue") {
+              if (board[y][x] === "blue") {
                   blue++;
-                  remove.push({x: xposition, y: yposition});
+                  remove.push({x:x, y:y});
               }
           }
 
-          xposition++;
+          x++;
       }
   }
 
@@ -190,3 +206,4 @@ function collapse(board) {
       return element;
   }
 }
+
