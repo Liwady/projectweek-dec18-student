@@ -40,14 +40,14 @@ function setPositionX(arrayJewel){
       catch(err) {
         return null;
       }
-    
+    this.positionX = arrayJewel[0];
 }
 function setPositionY(arrayJewel){
     try {
-        arrayJewel[0] > 0 && arrayJewel[0] < arrayJewel.length - 1
+        arrayJewel[1] > 0 && arrayJewel[1] < arrayJewel.length - 1
       }
       catch(err) {
         return null;
       }
-              
+    this.positionY = arrayJewel[1];
 }
