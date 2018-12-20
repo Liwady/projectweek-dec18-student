@@ -1,3 +1,4 @@
+
 var img;
 var canvas;
 var row = 5;
@@ -6,25 +7,33 @@ var board = [];
 
 function setup() {
 
-  img = createImg("https://images7.memedroid.com/images/UPLOADED971/5958d10406a9c.jpeg");
-  canvas = createCanvas(500, 500);
+img = createImg("https://images7.memedroid.com/images/UPLOADED971/5958d10406a9c.jpeg");
+canvas = createCanvas(500, 500);
 
-  img.position(0, 50);
-  img.size(500, 500);
-  canvas.position(500, 50);
+img.position(0, 50);
+img.size(500, 500);
+
+img2 = createImg("https://images7.memedroid.com/images/UPLOADED971/5958d10406a9c.jpeg");
+
+img2.position(1000, 50);
+img2.size(500, 500);
+
+canvas.position(500, 50);
 }
 
 
 function draw() {
-  background(50);
-  for (var y=0; y<col; y++) {
-    board[y]=[];
-    for (var x = 0; x<row; x++) {
-      const jewel = new Jewel([x, y]);
-      board[y][x] = jewel;
-    }
-  }
-
+	background(0);
+	//For (var BEGIN; END; INTERVAL){
+	//DO SOMETHING }
+	for (var x = 0; x < width; x += width / 10) {
+		for (var y = 0; y < height; y += height / 10) {
+			stroke(225);
+			strokeWeight(1);
+			line(x, 0, x, height);
+			line(0, y, width, y);
+		}
+	}
 }
 
 
