@@ -2,13 +2,9 @@ function width(grid) {
     return grid[0].length;
 }
 
-
-
 function height(grid) {
     return grid.length;
 }
-
-
 
 function isInside(grid, position) {
     if (position.x>=0 && position.y>=0) {
@@ -20,16 +16,12 @@ function isInside(grid, position) {
     return false;
 }
 
-
-
 function swap(grid, p, q) {    
     let pp = grid[p.y][p.x];
 
     grid[p.y][p.x] = grid[q.y][q.x];
     grid[q.y][q.x] = pp;
 }
-
-
 
 function horizontalChainAt(grid, position) {
     let acc = 1;
@@ -50,8 +42,6 @@ function horizontalChainAt(grid, position) {
     return acc;
 }
 
-
-
 function verticalChainAt(grid, position) {
     let acc = 1;
     let color = grid[position.y][position.x];
@@ -70,8 +60,6 @@ function verticalChainAt(grid, position) {
 
     return acc;
 }
-
-
 
 function removeChains(grid) {
     let red = 0;
@@ -148,19 +136,16 @@ function removeChains(grid) {
     return color;
 }
 
-
-
 function collapse(grid) {
     for (let x=0; x<width(grid); x++) {
         let last = height(grid)-1;
 
         for (let y=last; y>=0; y--) {
             if (grid[y][x] === "") {    
-                let element = grid[y][x];
-                let xyelement2 = checkHigherElement(grid, x, y);
+                let element = {x:x, y:y};
+                let element2 = checkHigherElement(grid, x, y);
     
-                grid[y][x] = grid[xyelement2.y][xyelement2.x];
-                grid[xyelement2.y][xyelement2.x] = element;
+                swap(grid, element, element2);
             }
         }
     }
@@ -177,4 +162,3 @@ function collapse(grid) {
         return element;
     }
 }
-
