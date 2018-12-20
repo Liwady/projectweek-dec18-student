@@ -83,7 +83,7 @@ function horizontalChainAt(board, jewel) {
   return acc;
 }
 
-function verticalChainAt(board, position) {
+function verticalChainAt(board, jewel) {
   let x = jewel.getPositionX();
   let y = jewel.getPositionY();
 
@@ -107,6 +107,7 @@ function verticalChainAt(board, position) {
 
 function removeChains(board) {
   let red = 0;
+  let yellow =0;
   let green = 0;
   let blue = 0;
   let remove = [];
@@ -115,18 +116,22 @@ function removeChains(board) {
       let x = 0;
 
       while (x<width(board)) {
-          let position = {x:x, y:y};
+          let jewel = {x:x, y:y};
 
-          if (horizontalChainAt(board, position) >= 3) {
-              if (board[y][x] === "red") {
+          if (horizontalChainAt(board, jewel) >= 3) {
+              if (board[y][x] === "Red") {
                   red++;
                   remove.push({x:x, y:y});
               }
-              if (board[y][x] === "green") {
+              if (board[y][x] === "Yellow") {
+                  yellow++;
+                  remove.push({x:x, y:y});
+            }
+              if (board[y][x] === "Green") {
                   green++;
                   remove.push({x:x, y:y});
               }
-              if (board[y][x] === "blue") {
+              if (board[y][x] === "Blue") {
                   blue++;
                   remove.push({x:x, y:y});
               }
@@ -136,40 +141,50 @@ function removeChains(board) {
       }
   }
 
-  for (let xposition=0; xposition<width(board); xposition++) {      
-      let yposition = 0;
+  for (let x=0; x<width(board); x++) {      
+      let y = 0;
 
-      while (yposition<height(board)) {
-          let position = {x:xposition, y:yposition};
+      while (y<height(board)) {
+          let jewel = {x:x, y:y};
 
-          if (verticalChainAt(board, position) >= 3) {
-              if (board[yposition][xposition] === "red") {
+          if (verticalChainAt(board, jewel) >= 3) {
+              if (board[y][x] === "Red") {
                   red++;
-                  remove.push({x: xposition, y: yposition});
+                  remove.push({x:x, y:y});
               }
-              if (board[yposition][xposition] === "green") {
+              if (board[y][x] === "Yellow") {
+                  yellow++;
+                  remove.push({x:x, y:y});
+            }
+              if (board[y][x] === "Green") {
                   green++;
-                  remove.push({x: xposition, y: yposition});
+                  remove.push({x:x, y:y});
               }
-              if (board[yposition][xposition] === "blue") {
+              if (board[y][x] === "Blue") {
                   blue++;
-                  remove.push({x: xposition, y: yposition});
+                  remove.push({x:x, y:y});
               }
           }
 
-          yposition++;
+          y++;
       }
   }
 
   for (let i=0; i<remove.length; i++) {
-      let position = remove[i];
-      board[position.y][position.x] = "";
+      let jewel = remove[i];
+      let x = jewel.getPositionX();
+      let y = jewel.getPositionY();
+
+      board[y][x] = "";
   }
 
   let color = {};
   if (red !== 0) {
       color.red = red;
   }
+  if (yellow !== 0) {
+    color.yellow = yellow;
+}
   if (green !== 0) {
       color.green = green;
   }
@@ -186,24 +201,23 @@ function collapse(board) {
 
       for (let y=last; y>=0; y--) {
           if (board[y][x] === "") {    
-              let element = {x:x, y:y};
-              let element2 = checkHigherElement(board, x, y);
+              let jewel1 = {x:x, y:y};
+              let jewel2 = checkHigherElement(board, jewel.getPositionX(), jewel.getPositionY());
   
-              swap(board, element, element2);
+              swap(board, jewel1, jewel2);
           }
       }
   }
 
-  function checkHigherElement(board, xelement, yelement) {
-      let element = {x:xelement, y:yelement};
+  function checkHigherElement(board, x, y) {
+      let element = {x:x, y:y};
 
-      for (let y=element.y; y>=0; y--) {
+      for (let y2=element.y; y2>=0; y2--) {
           if (board[element.y][element.x] === "") {
-              element = {x:xelement, y:y};
+              element = {x:x, y:y2};
           }
       }
       
       return element;
   }
 }
-
