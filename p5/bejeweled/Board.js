@@ -24,18 +24,41 @@ canvas.position(500, 50);
 
 function draw() {
 	background(0);
-	//For (var BEGIN; END; INTERVAL){
-	//DO SOMETHING }
+	
 	for (var x = 0; x < width; x += width / 10) {
+        board[x] = [];    
 		for (var y = 0; y < height; y += height / 10) {
 			stroke(225);
 			strokeWeight(1);
 			line(x, 0, x, height);
-			line(0, y, width, y);
+            line(0, y, width, y);
+            board[x][y] = new Jewel(board[x][y]);
+            makeJewel(Jewel);
 		}
 	}
 }
-
+function makeJewel(){
+    if (Jewel.color !== null){
+        switch(color){
+            case "Yellow":
+                hue(60);
+                ellipse(Jewel.getPositionX, Jewel.getPositionY, 144, 72, 72);
+                break; 
+            case "Red":
+                hue(360);
+                ellipse(Jewel.getPositionX, Jewel.getPositionY, 144, 72, 72);
+                break;
+            case "Blue":
+                hue(245);
+                ellipse(Jewel.getPositionX, Jewel.getPositionY, 144, 72, 72);
+                break;
+            case "Green":
+                hue(124);
+                ellipse(Jewel.getPositionX, Jewel.getPositionY, 144, 72, 72);
+                break;
+            }
+    }
+}
 
 function width(board) {
   return board[0].length;

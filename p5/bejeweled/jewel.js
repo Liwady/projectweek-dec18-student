@@ -6,8 +6,8 @@ var positionY;
 class Jewel{
      Jewel(arrayJewel) {
         setColor();
-        setShape();
         setPositionX(arrayJewel);
+        setShape();
         setPositionY(arrayJewel);
     }
 }    
