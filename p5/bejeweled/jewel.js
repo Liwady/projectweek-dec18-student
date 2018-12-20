@@ -51,3 +51,11 @@ function setPositionY(arrayJewel){
       }
     this.positionY = arrayJewel[1];
 }
+function getPositionX(){
+    return this.positionX;
+}
+
+function getPositionY(){
+    return this.positionX;
+}
+
