@@ -15,9 +15,9 @@ function setShape(){
     this.shape = "circle";
 }
         
-function setColor(){
-            
-    var number = Math.random(3);
+function setColor() {
+    var number = Math.floor(Math.random() * 4);
+
         switch(number){
             case 0:
                 this.color = "Yellow";
@@ -33,6 +33,7 @@ function setColor(){
                 break;
             }
 }
+
 function setPositionX(arrayJewel){
     try {
         arrayJewel[0] > 0 && arrayJewel[0] < arrayJewel.length - 1
@@ -42,6 +43,7 @@ function setPositionX(arrayJewel){
       }
     this.positionX = arrayJewel[0];
 }
+
 function setPositionY(arrayJewel){
     try {
         arrayJewel[1] > 0 && arrayJewel[1] < arrayJewel.length - 1
@@ -51,6 +53,7 @@ function setPositionY(arrayJewel){
       }
     this.positionY = arrayJewel[1];
 }
+
 function getPositionX(){
     return this.positionX;
 }

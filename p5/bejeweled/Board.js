@@ -29,24 +29,27 @@ function draw() {
 	
 	for (var x = 0; x < width; x += width / 10) {
         board[x] = [];
+
 		for (var y = 0; y < height; y += height / 10) {
+            console.log(x);
+            console.log(y);
 			stroke(225);
 			strokeWeight(1);
 			line(x, 0, x, height);
             line(0, y, width, y);
-            board[x][y] = new Jewel(board[x][y]);
+            board[x][y] = new Jewel( board[x][y]);
             makeJewel(Jewel);
 		}
 	}
 }
 
-function makeJewel(){
+function makeJewel(Jewel) {
     if (Jewel.color !== null){
         switch(color){
             case "Yellow":
                 hue(60);
                 ellipse(Jewel.getPositionX, Jewel.getPositionY, 144, 72, 72);
-                break; 
+                break;
             case "Red":
                 hue(360);
                 ellipse(Jewel.getPositionX, Jewel.getPositionY, 144, 72, 72);
