@@ -28,7 +28,7 @@ function draw() {
 	background(0);
 	
 	for (var x = 0; x < width; x += width / 10) {
-        board[x] = [];    
+        board[x] = [];
 		for (var y = 0; y < height; y += height / 10) {
 			stroke(225);
 			strokeWeight(1);
@@ -39,6 +39,7 @@ function draw() {
 		}
 	}
 }
+
 function makeJewel(){
     if (Jewel.color !== null){
         switch(color){
@@ -58,7 +59,7 @@ function makeJewel(){
                 hue(124);
                 ellipse(Jewel.getPositionX, Jewel.getPositionY, 144, 72, 72);
                 break;
-            }
+        }
     }
 }
 
