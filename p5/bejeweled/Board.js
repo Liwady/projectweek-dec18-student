@@ -1,3 +1,4 @@
+
 var img;
 var canvas;
 var row = 5;
@@ -6,32 +7,67 @@ var board = [];
 
 function setup() {
 
-  img = createImg("https://images7.memedroid.com/images/UPLOADED971/5958d10406a9c.jpeg");
-  canvas = createCanvas(500, 500);
+img = createImg("https://images7.memedroid.com/images/UPLOADED971/5958d10406a9c.jpeg");
+canvas = createCanvas(500, 500);
 
-  img.position(0, 50);
-  img.size(500, 500);
-  canvas.position(500, 50);
+img.position(0, 50);
+img.size(500, 500);
+
+img2 = createImg("https://images7.memedroid.com/images/UPLOADED971/5958d10406a9c.jpeg");
+
+img2.position(1000, 50);
+img2.size(500, 500);
+
+canvas.position(500, 50);
 }
 
 /************
     BOARD
 ************/
 function draw() {
-  background(50);
-  for (var y=0; y<col; y++) {
-    board[y]=[];
-    for (var x = 0; x<row; x++) {
-      const jewel = new Jewel([x, y]);
-      board[y][x] = jewel;
-    }
-  }
-
+	background(0);
+	
+	for (var x = 0; x < width; x += width / 10) {
+        board[x] = [];    
+		for (var y = 0; y < height; y += height / 10) {
+			stroke(225);
+			strokeWeight(1);
+			line(x, 0, x, height);
+            line(0, y, width, y);
+            board[x][y] = new Jewel(board[x][y]);
+            makeJewel(Jewel);
+		}
+	}
 }
+function makeJewel(){
+    if (Jewel.color !== null){
+        switch(color){
+            case "Yellow":
+                hue(60);
+                ellipse(Jewel.getPositionX, Jewel.getPositionY, 144, 72, 72);
+                break; 
+            case "Red":
+                hue(360);
+                ellipse(Jewel.getPositionX, Jewel.getPositionY, 144, 72, 72);
+                break;
+            case "Blue":
+                hue(245);
+                ellipse(Jewel.getPositionX, Jewel.getPositionY, 144, 72, 72);
+                break;
+            case "Green":
+                hue(124);
+                ellipse(Jewel.getPositionX, Jewel.getPositionY, 144, 72, 72);
+                break;
+            }
+    }
+}
+
+
 
 /*************
     WIDTH
 *************/
+
 function width(board) {
   return board[0].length;
 }
@@ -254,6 +290,13 @@ function collapse(board) {
 /**********************
     CHECK NEXT TO
 **********************/
+function mouseClick() {
+    // switch two jewels
+}
+
+/**********************
+    CHECK NEXT TO
+**********************/
 function checkNextTo(jewel1, jewel2) {
     let x1 = jewel1.getPositionX();
     let y1 = jewel1.getPositionY();
@@ -317,8 +360,21 @@ function checkChainIfSwap(board, jewel1, jewel2) {
     CHECK SWAP
 ******************/
 function checkSwap(board, jewel1, jewel2) {
-    if (checkNextTo(jewel1, jewel2) === true) {
-        checkChainIfSwap(board, jewel1, jewel2);
-    }
+    //if (mouseClick === true) {
+        if (checkNextTo(jewel1, jewel2) === true) {
+            checkChainIfSwap(board, jewel1, jewel2);
+        }
+    //}
 }
 
+/***************************
+    CHECK EMPTY TOP ROW
+***************************/
+function checkEmptyTopRow(board) {
+    for (let x=0; x<width(board); x++) {
+        if (board[0][x] === 0) {
+            // new Jewel(board[0][x]);
+            // makeJewel(Jewel);
+        }
+    }
+}
