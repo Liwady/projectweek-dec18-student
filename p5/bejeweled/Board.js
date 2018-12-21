@@ -7,13 +7,13 @@ var board = [];
 
 function setup() {
 
-img = createImg("https://images7.memedroid.com/images/UPLOADED971/5958d10406a9c.jpeg");
+img = createImg("https://pics.me.me/i-played-candy-crush-back-whenit-was-bejeweled-1988381.png");
 canvas = createCanvas(500, 500);
 
 img.position(0, 50);
 img.size(500, 500);
 
-img2 = createImg("https://images7.memedroid.com/images/UPLOADED971/5958d10406a9c.jpeg");
+img2 = createImg("https://pics.me.me/i-played-candy-crush-back-whenit-was-bejeweled-1988381.png");
 
 img2.position(1000, 50);
 img2.size(500, 500);
